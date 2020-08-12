@@ -14,7 +14,7 @@ final class AuthTest extends TestCase
     public function testByIncorrectToken(): void
     {
         $this
-            ->getJson($this->url('random_token'))
+            ->postJson($this->url('random_token'))
             ->assertStatus(422);
     }
 
