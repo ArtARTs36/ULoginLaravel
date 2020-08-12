@@ -6,9 +6,18 @@ use ArtARTs36\ULoginApi\Entities\User as ExternalUser;
 use ArtARTs36\ULoginLaravel\Contracts\User;
 use ArtARTs36\ULoginLaravel\Models\Profile;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 trait UserOnULogin
 {
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
     /**
      * @return HasMany
      */
@@ -25,7 +34,7 @@ trait UserOnULogin
     {
         return static::query()->create([
             'name' => $user->firstName() . ' ' . $user->lastName(),
-            'password' => bcrypt(str_random(10)),
+            'password' => bcrypt(Str::random(10)),
         ]);
     }
 }
