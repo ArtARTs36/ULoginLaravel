@@ -2,7 +2,7 @@
 
 ---
 
-#####install:
+#### Installation:
 
-1. `composer require artarts36/ulogin-api`
+1. `composer require artarts36/ulogin-laravel`
 2. `php artisan migrate`
