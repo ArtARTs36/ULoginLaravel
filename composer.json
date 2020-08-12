@@ -1,0 +1,41 @@
+{
+    "name": "artarts36/ulogin-laravel",
+    "description": "Auth via ULogin for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ArtARTs36",
+            "email": "temicska99@mail.ru"
+        }
+    ],
+    "require": {
+        "illuminate/support": "^7.0",
+        "artarts36/ulogin-api": "^0.1.0",
+        "laravel/framework": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.3",
+        "squizlabs/php_codesniffer": "^3.0",
+        "orchestra/testbench": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "ArtARTs36\\ULoginLaravel\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ArtARTs36\\ULoginLaravel\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "lint": [
+            "./vendor/bin/phpcs --standard=PSR2 src/",
+            "./vendor/bin/phpcs --standard=PSR2 tests/"
+        ],
+        "test": [
+            "./vendor/bin/phpunit -v --coverage-text --colors=always --configuration phpunit.xml"
+        ]
+    }
+}
