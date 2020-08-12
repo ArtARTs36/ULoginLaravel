@@ -12,6 +12,19 @@ use Illuminate\Support\ServiceProvider;
  */
 class ULoginAuthProvider extends ServiceProvider
 {
+    protected const ROOT_PATH = __DIR__.'/../../';
+
+    public function boot()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                static::ROOT_PATH . '/config/ulogin.php' => config_path('ulogin.php'),
+            ], 'ulogin');
+
+            $this->loadMigrationsFrom(static::ROOT_PATH . '/database/migrations');
+        }
+    }
+
     public function register(): void
     {
         $this->mergeConfigFrom(
