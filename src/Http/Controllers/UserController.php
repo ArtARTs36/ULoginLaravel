@@ -20,9 +20,13 @@ class UserController extends Controller
         try {
             $user = $this->service->getUserByToken($request->get(AuthRequest::FIELD_TOKEN));
 
-            auth()->guard(config('ulogin.auth.guard'))->setUser($user);
+            \auth()->guard(\config('ulogin.auth.guard'))->setUser($user);
         } catch (GivenIncorrectToken $exception) {
-            abort(422, 'Given incorrect token');
+            \abort(422, 'Given incorrect token');
         }
+
+        return \response()->json([
+            'result' => 'ok',
+        ]);
     }
 }
