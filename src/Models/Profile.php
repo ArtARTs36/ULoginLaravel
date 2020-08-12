@@ -5,6 +5,7 @@ namespace ArtARTs36\ULoginLaravel\Models;
 use ArtARTs36\ULoginLaravel\Contracts\User;
 use ArtARTs36\ULoginApi\Entities\User as ExternalProfile;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -26,6 +27,14 @@ class Profile extends Model
         self::FIELD_USER_ID,
         self::FIELD_IDENTITY,
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(config('ulogin.models.user'));
+    }
 
     /**
      * @param ExternalProfile $external
