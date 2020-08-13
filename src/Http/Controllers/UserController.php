@@ -5,7 +5,9 @@ namespace ArtARTs36\ULoginLaravel\Http\Controllers;
 use ArtARTs36\ULoginApi\Exceptions\GivenIncorrectToken;
 use ArtARTs36\ULoginLaravel\Contracts\User;
 use ArtARTs36\ULoginLaravel\Http\Requests\AuthRequest;
+use ArtARTs36\ULoginLaravel\Models\Profile;
 use ArtARTs36\ULoginLaravel\Services\UserService;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -42,7 +44,37 @@ class UserController extends Controller
 
             return $user;
         } catch (GivenIncorrectToken $exception) {
-            \abort(422, 'Given incorrect token');
+            \abort(Response::HTTP_UNPROCESSABLE_ENTITY, 'Given incorrect token');
+
+            return null;
+        }
+    }
+
+    /**
+     * @param AuthRequest $request
+     * @return Profile|null
+     */
+    public function attachProfile(AuthRequest $request): ?Profile
+    {
+        if (auth()->guard(\config('ulogin.auth.guard'))->guest()) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
+        try {
+            $external = $this->service->getExternalUser($request->get(AuthRequest::FIELD_TOKEN));
+            $profile = $this->service->findProfileByIdentity($external->identity());
+
+            if ($profile) {
+                throw new \LogicException('Profile already attach');
+            }
+
+            return Profile::createOfExternal($external, auth()->user());
+        } catch (GivenIncorrectToken $exception) {
+            \abort(Response::HTTP_UNPROCESSABLE_ENTITY, 'Given incorrect token');
+
+            return null;
+        } catch (\Exception $exception) {
+            abort(Response::HTTP_UNPROCESSABLE_ENTITY);
 
             return null;
         }

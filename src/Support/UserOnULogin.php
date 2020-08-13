@@ -35,6 +35,7 @@ trait UserOnULogin
         return static::query()->create([
             'name' => $user->firstName() . ' ' . $user->lastName(),
             'password' => bcrypt(Str::random(10)),
+            'email' => $user->email(),
         ]);
     }
 }

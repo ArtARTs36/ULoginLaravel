@@ -24,12 +24,21 @@ class UserService
 
     /**
      * @param string $token
+     * @return ExternalProfile
+     */
+    public function getExternalUser(string $token)
+    {
+        return $this->uLoginApi->user($token);
+    }
+
+    /**
+     * @param string $token
      * @return User
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getUserByToken(string $token)
     {
-        $external = $this->uLoginApi->user($token);
+        $external = $this->getExternalUser($token);
 
         return $this->findUserByIdentity($external->identity()) ?? $this->createUser($external);
     }
@@ -83,5 +92,13 @@ class UserService
         } else {
             $guard->setUser($user);
         }
+    }
+
+    /**
+     * @return Api
+     */
+    final protected function uLoginApi(): Api
+    {
+        return $this->uLoginApi;
     }
 }

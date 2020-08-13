@@ -61,4 +61,12 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             }
         };
     }
+
+    /**
+     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return auth()->guard(\config('ulogin.auth.guard'));
+    }
 }

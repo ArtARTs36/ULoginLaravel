@@ -13,7 +13,10 @@
     <testsuites>
         <testsuite name="Unit">
             <directory suffix="ProfileTest.php">./tests/Unit</directory>
-            <directory suffix="AuthTest.php">./tests/Feature</directory>
+            <directory suffix="UserTest.php">./tests/Feature</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory suffix="ProfileTest.php">./tests/Unit</directory>
         </testsuite>
     </testsuites>
     <php>
