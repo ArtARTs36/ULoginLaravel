@@ -21,6 +21,6 @@ ArtARTs36\ULoginLaravel\Providers\ULoginAuthProvider::class
     * add use trait 'use ArtARTs36\ULoginLaravel\Support\UserOnULogin;'    
 <br/>
 7. In \App\Http\Middleware\VerifyCsrfToken in $except add:
-"https://ulogin.ru/*" <br/>
+"https://ulogin.ru/*"
 
 8. Run: `php artisan migrate`
