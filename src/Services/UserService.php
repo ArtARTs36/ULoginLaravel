@@ -24,7 +24,7 @@ class UserService
 
     /**
      * @param string $token
-     * @return User|Profile|null
+     * @return User
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getUserByToken(string $token)
