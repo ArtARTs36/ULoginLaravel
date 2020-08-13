@@ -2,7 +2,7 @@
 
 return [
     'models' => [
-        'user' => '',
+        'user' => '\App\User',
     ],
     'auth' => [
         'guard' => 'api',
