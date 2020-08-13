@@ -38,7 +38,7 @@ class UserController extends Controller
         try {
             $user = $this->service->getUserByToken($request->get(AuthRequest::FIELD_TOKEN));
 
-            \auth()->guard(\config('ulogin.auth.guard'))->login($user);
+            $this->service->authInGuard($user);
 
             return $user;
         } catch (GivenIncorrectToken $exception) {

@@ -6,5 +6,6 @@ return [
     ],
     'auth' => [
         'guard' => 'api',
+        'remember' => true,
     ],
 ];

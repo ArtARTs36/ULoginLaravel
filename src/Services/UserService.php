@@ -6,6 +6,7 @@ use ArtARTs36\ULoginApi\Api;
 use ArtARTs36\ULoginLaravel\Contracts\User;
 use ArtARTs36\ULoginLaravel\Models\Profile;
 use ArtARTs36\ULoginApi\Entities\User as ExternalProfile;
+use Illuminate\Auth\SessionGuard;
 
 class UserService
 {
@@ -57,5 +58,19 @@ class UserService
         Profile::createOfExternal($external, $user);
 
         return $user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function authInGuard(User $user): void
+    {
+        $guard = \auth()->guard(\config('ulogin.auth.guard'));
+
+        if ($guard instanceof SessionGuard) {
+            $guard->login($user, (bool) \config('ulogin.auth.remember'));
+        } else {
+            $guard->setUser($user);
+        }
     }
 }
