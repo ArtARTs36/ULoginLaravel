@@ -31,7 +31,18 @@ class UserService
     {
         $external = $this->uLoginApi->user($token);
 
-        return $this->findProfileByIdentity($external->identity())->user ?? $this->createUser($external);
+        return $this->findUserByIdentity($external->identity()) ?? $this->createUser($external);
+    }
+
+    /**
+     * @param string $identity
+     * @return User|null
+     */
+    public function findUserByIdentity(string $identity): ?User
+    {
+        $profile = $this->findProfileByIdentity($identity);
+
+        return $profile ? $profile->user : null;
     }
 
     /**
