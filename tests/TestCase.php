@@ -4,6 +4,7 @@ namespace ArtARTs36\ULoginLaravel\Tests;
 
 use ArtARTs36\ULoginLaravel\Contracts\User;
 use ArtARTs36\ULoginLaravel\Providers\ULoginAuthProvider;
+use ArtARTs36\ULoginLaravel\Support\UserOnULogin;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -30,27 +31,42 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         ]);
     }
 
-    protected function getPackageProviders($app)
+    /**
+     * @param \Illuminate\Foundation\Application $app
+     * @return array
+     */
+    protected function getPackageProviders($app): array
     {
         return [
             ULoginAuthProvider::class,
         ];
     }
 
+    /**
+     * @param int $id
+     * @return User
+     */
     protected function makeUser(int $id): User
     {
-        return new class($id) implements User {
-            private $id;
+        return new class(['id' => $id]) extends \Illuminate\Foundation\Auth\User implements User {
+            use UserOnULogin;
 
-            public function __construct(int $id)
-            {
-                $this->id = $id;
-            }
+            protected $fillable = [
+                'id',
+            ];
 
             public function getId(): int
             {
                 return $this->id;
             }
         };
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return auth()->guard(\config('ulogin.auth.guard'));
     }
 }
