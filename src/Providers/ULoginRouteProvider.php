@@ -16,7 +16,8 @@ class ULoginRouteProvider extends RouteServiceProvider
 
     protected function mapApiRoutes()
     {
-        Route::namespace($this->namespace)
+        Route::middleware('web')
+            ->namespace($this->namespace)
             ->group(__DIR__.'/../../routes/web.php');
     }
 }
